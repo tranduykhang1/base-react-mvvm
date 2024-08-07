@@ -7,48 +7,47 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetching } from "../api/useFetching";
 import { useLocalStorage } from "../common/useLocalStorage";
-export const useAuth = ({
-    redirectTo,
-}: {
-    redirectTo?: string;
-}): UseAuthResponse => {
-    const { value, setValue } = useLocalStorage<AuthModel>(AUTH_KEY.token);
+
+export const useAuth = (redirectTo = null): UseAuthResponse => {
+    const { value: token, removeValue } = useLocalStorage<AuthModel>(
+        AUTH_KEY.token
+    );
     const navigate = useNavigate();
-    const [isAuth] = useState(false);
-    const [currentUser, setCurrentUser] = useState<UserModel>(null);
-    const { execute: _getCurrentUser } = useFetching<UserModel>(
+    const [isAuth, setIsAuth] = useState(false);
+    const [currentUser, setCurrentUser] = useState<UserModel | null>(null);
+    const { execute: fetchCurrentUser } = useFetching<UserModel>(
         userUseCase.getCurrent
     );
 
     const redirect = useCallback(() => {
-        navigate(redirectTo, {
-            replace: true,
-        });
-    }, [navigate, redirectTo]);
-
-    const getCurrentUser = useCallback(async () => {
-        const res = await _getCurrentUser();
-        if (res.data) {
-            setCurrentUser(res.data);
-        }
-        if (res.error) {
-            redirect();
-        }
+        navigate(redirectTo, { replace: true });
     }, []);
 
+    const getCurrentUser = useCallback(async () => {
+        const { data, error } = await fetchCurrentUser();
+        if (data) {
+            setCurrentUser(data);
+            setIsAuth(true);
+        } else if (error) {
+            setIsAuth(false);
+            redirect();
+            return;
+        }
+    }, [fetchCurrentUser, redirect]);
+
     useEffect(() => {
-        if (redirectTo && !value?.accessToken) {
-            navigate(redirectTo, { replace: true });
-            setValue(null);
+        if (!token?.accessToken) {
+            removeValue(AUTH_KEY.token);
+            redirect();
             return;
         }
         getCurrentUser();
-    }, [value]);
+    }, [token]);
 
     return {
         getCurrentUser,
         isAuth,
-        token: "13527f08-0986-566c-9437-9c814d32c27e",
+        token: token?.accessToken ?? "",
         user: currentUser,
     };
 };

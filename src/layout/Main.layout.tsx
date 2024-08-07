@@ -1,15 +1,18 @@
-import { useAuth } from "@/hooks/auth/useAuth";
+import { AuthProvider } from "@/providers/AuthProvider";
 import { AUTH_ROUTES } from "@/router/constant";
+import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import Header from "./Header.layout";
+
+const Header = lazy(()=> import("@/layout/Header.layout"));
 
 export const Layout = () => {
-    useAuth({ redirectTo: AUTH_ROUTES.login });
     return (
-        <>
-            <Header/>
-            <Outlet />
-            <>Header</>
-        </>
+        <AuthProvider redirectTo={AUTH_ROUTES.login}>
+            <Suspense fallback={<>Loading</>}>
+                <Header />
+                <Outlet />
+                <>Footer</>
+            </Suspense>
+        </AuthProvider>
     );
 };

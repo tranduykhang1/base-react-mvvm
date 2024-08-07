@@ -1,10 +1,28 @@
-import { createContext } from "react";
+import { useAuth } from "@/hooks/auth/useAuth";
+import { UseAuthResponse } from "@/types/auth.type";
+import React, { createContext, ReactNode, useContext } from "react";
 
-export const AuthProviderContext = createContext<object | undefined>(undefined);
-export const AuthProvider = ({ children }) => {
-    return (
-        <AuthProviderContext.Provider value={{}}>
-            {children}
-        </AuthProviderContext.Provider>
-    );
+interface AuthProviderProps {
+    children: ReactNode;
+    redirectTo?: string;
+}
+
+const AuthContext = createContext<UseAuthResponse | undefined>(undefined);
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({
+    children,
+    redirectTo,
+}) => {
+    const auth = useAuth(redirectTo);
+
+    return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuthContext = (): UseAuthResponse => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuthContext must be used within an AuthProvider");
+    }
+    return context;
 };
