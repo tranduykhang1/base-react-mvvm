@@ -1,6 +1,6 @@
 import { env } from "@/config/env";
 import { AUTH_KEY } from "@/enum/auth.enum";
-import { default as axios, default as Axios, AxiosInstance } from "axios";
+import { default as Axios, AxiosInstance } from "axios";
 import { setupCache } from "axios-cache-interceptor";
 
 interface APIClient {
@@ -25,7 +25,7 @@ export class APIClientImpl implements APIClient {
             timeout: 10000,
             validateStatus: (status) => status >= 200 && status <= 500,
         });
-        this._setAuthToken()
+        this._setAuthToken();
 
         this._client.interceptors.request.use(
             (config) => {
@@ -58,11 +58,13 @@ export class APIClientImpl implements APIClient {
                 JSON.parse(window.localStorage.getItem(AUTH_KEY.token))
                     ?.accessToken || "";
         }
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        this._client.defaults.headers.common[
+            "Authorization"
+        ] = `Bearer ${token}`;
     };
 
     async get<T, P>(url: string, params?: P): Promise<T> {
-        this._setAuthToken()
+        this._setAuthToken();
         const res = await this._client.get(url, { params });
         return res.data?.data || res.data;
     }
