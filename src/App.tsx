@@ -4,6 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import { coreTheme } from "./config/theme";
 import { SnackbarProvider } from "./providers/SnackbarProvider";
 import router from "./presentations/routers/router";
+import ErrorBoundary from "./presentations/pages/ErrorBoundary";
 
 export function App() {
     const theme = useMemo(() => {
@@ -13,7 +14,9 @@ export function App() {
     return (
         <ThemeProvider theme={theme}>
             <SnackbarProvider>
-                <RouterProvider router={router} />
+                <ErrorBoundary>
+                    <RouterProvider router={router} />
+                </ErrorBoundary>
             </SnackbarProvider>
         </ThemeProvider>
     );

@@ -52,7 +52,7 @@ pnpm storybook
 -   **repositoryImpl**: Implements the repository classes.
 -   **useCases**: Defines the module's behavior ***(e.g., UserUseCase -> getAll, getById)***.
 
-### ✏️ enum
+### ✏️  enum
 
 -   **Purpose**: Store global constants.
 -   **Guideline**: Place enumerations and global constants in this directory.
