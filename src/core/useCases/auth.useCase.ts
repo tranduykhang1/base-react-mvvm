@@ -1,6 +1,6 @@
 import { classUtils } from "@/utils/class.util";
 import { LoginPayload } from "../../types/auth.type";
-import { AuthRepositoryImpl } from "../infras/auth.infras";
+import { AuthRepositoryImpl } from "../repositoryImpl/auth.repositoryImpl";
 import { AuthModel } from "../models/auth.model";
 import { AuthRepository } from "../repositories/auth.repository";
 

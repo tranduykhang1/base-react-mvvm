@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 export const useAnalytics = () => {
     const firebaseConfig = {
-        apiKey: "AIzaSyCHhL5VQRREKwX8tndrHX_yAn9GZBKqObQ",
+        apiKey: import.meta.env.VITE_FIREBASE_KEY,
         authDomain: "fir-b6d44.firebaseapp.com",
         projectId: "fir-b6d44",
         storageBucket: "fir-b6d44.appspot.com",

@@ -1,4 +1,3 @@
-"use client";
 import { SnackbarContext } from "@/providers/SnackbarProvider";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";

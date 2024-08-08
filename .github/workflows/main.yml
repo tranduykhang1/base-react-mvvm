@@ -1,0 +1,27 @@
+name: React-MVVM Simple CI
+
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+
+jobs:
+  install_and_test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.x'
+
+      - name: Install - Build
+        run: |
+          npm i -g pnpm
+          pnpm install --no-frozen-lockfile
+          pnpm build

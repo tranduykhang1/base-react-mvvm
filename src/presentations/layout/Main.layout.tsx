@@ -1,9 +1,9 @@
+import { AUTH_ROUTES } from "@/enum/router.enum";
 import { AuthProvider } from "@/providers/AuthProvider";
-import { AUTH_ROUTES } from "@/router/constant";
 import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
-const Header = lazy(()=> import("@/layout/Header.layout"));
+const Header = lazy(()=> import("@/presentations/layout/Header.layout"));
 
 export const Layout = () => {
     return (
@@ -11,7 +11,6 @@ export const Layout = () => {
             <Suspense fallback={<>Loading</>}>
                 <Header />
                 <Outlet />
-                <>Footer</>
             </Suspense>
         </AuthProvider>
     );

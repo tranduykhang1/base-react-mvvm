@@ -1,5 +1,5 @@
 import { classUtils } from "@/utils/class.util";
-import { UserRepositoryImpl } from "../infras/user.infras";
+import { UserRepositoryImpl } from "../repositoryImpl/user.repositoryImpl";
 import { UserModel } from "../models/user.model";
 import { UserRepository } from "../repositories/user.repository";
 
