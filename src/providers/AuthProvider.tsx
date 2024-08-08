@@ -1,4 +1,4 @@
-import { useAuth } from "@/hooks/auth/useAuth";
+import { useAuth } from "@/presentations/hooks/auth/useAuth";
 import { UseAuthResponse } from "@/types/auth.type";
 import React, { createContext, ReactNode, useContext } from "react";
 

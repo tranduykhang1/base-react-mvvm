@@ -14,6 +14,7 @@ export const useAuth = (redirectTo = null): UseAuthResponse => {
     );
     const navigate = useNavigate();
     const [isAuth, setIsAuth] = useState(false);
+    const [isAuthenticating, setIsAuthenticating] = useState(true);
     const [currentUser, setCurrentUser] = useState<UserModel | null>(null);
     const { execute: fetchCurrentUser } = useFetching<UserModel>(
         userUseCase.getCurrent
@@ -39,13 +40,15 @@ export const useAuth = (redirectTo = null): UseAuthResponse => {
         if (!token?.accessToken) {
             removeValue(AUTH_KEY.token);
             redirect();
-            return;
+        } else {
+            getCurrentUser();
         }
-        getCurrentUser();
+        setIsAuthenticating(false)
     }, [token]);
 
     return {
         getCurrentUser,
+        isAuthenticating,
         isAuth,
         token: token?.accessToken ?? "",
         user: currentUser,

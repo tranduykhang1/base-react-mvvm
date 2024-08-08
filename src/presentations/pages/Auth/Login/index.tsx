@@ -1,6 +1,6 @@
-import CustomButton from "@/components/Buttons/CustomButton";
-import CustomTextField from "@/components/TextFields/CustomTextField";
-import { useAuthViewModel } from "@/core/view-models/AuthViewAuthModel";
+import CustomButton from "@/presentations/components/Buttons/CustomButton";
+import CustomTextField from "@/presentations/components/TextFields/CustomTextField";
+import { useAuthViewModel } from "@/presentations/viewModels/AuthViewAuthModel";
 import { loginValidationSchema } from "@/schemas/auth.schema";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";

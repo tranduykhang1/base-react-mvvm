@@ -19,6 +19,7 @@ export type LoginResponse = {
 export type UseAuthResponse = {
     token: string;
     isAuth: boolean;
+    isAuthenticating: boolean,
     user: UserModel;
     getCurrentUser: () => Promise<void>;
 };

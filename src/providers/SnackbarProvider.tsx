@@ -1,8 +1,8 @@
-import CustomizedSnackbar from '@/components/Snackbars/CustomSnackbar';
+import CustomizedSnackbar from '@/presentations/components/Snackbars/CustomSnackbar';
 import { AlertColor, SnackbarOrigin } from '@mui/material';
 import { ReactNode, createContext, useState } from 'react';
 
-interface SnackbarState extends SnackbarOrigin {
+export interface SnackbarState extends SnackbarOrigin {
   open: boolean;
   message: string;
   severity: AlertColor;
@@ -10,7 +10,7 @@ interface SnackbarState extends SnackbarOrigin {
 
 export interface SnackbarContextProps {
   state: SnackbarState;
-  showSnackbar: (message: string, severity: AlertColor) => void;
+  showSnackbar?: (message: string, severity: AlertColor) => void;
   closeSnackbar: () => void;
 }
 

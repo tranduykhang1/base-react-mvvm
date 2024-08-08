@@ -1,6 +1,6 @@
 import { env } from "@/config/env";
 import { AUTH_KEY } from "@/enum/auth.enum";
-import { default as Axios, AxiosInstance } from "axios";
+import { default as Axios, AxiosInstance, HttpStatusCode } from "axios";
 import { setupCache } from "axios-cache-interceptor";
 
 interface APIClient {
@@ -38,8 +38,22 @@ export class APIClientImpl implements APIClient {
 
         this._client.interceptors.response.use(
             (response) => {
-                if (![200, 201].includes(response.status)) {
+                if (
+                    ![HttpStatusCode.Ok, HttpStatusCode.Created].includes(
+                        response.status
+                    )
+                ) {
                     return Promise.reject(response.data);
+                }
+                if (
+                    [
+                        HttpStatusCode.Unauthorized,
+                        HttpStatusCode.Forbidden,
+                    ].includes(response.status)
+                ) {
+                    //handle refresh token
+
+                    this._setAuthToken()
                 }
                 return Promise.resolve(response);
             },
@@ -58,9 +72,8 @@ export class APIClientImpl implements APIClient {
                 JSON.parse(window.localStorage.getItem(AUTH_KEY.token))
                     ?.accessToken || "";
         }
-        this._client.defaults.headers.common[
-            "Authorization"
-        ] = `Bearer ${token}`;
+        this._client.defaults.headers.common["Authorization"] =
+            `Bearer ${token}`;
     };
 
     async get<T, P>(url: string, params?: P): Promise<T> {

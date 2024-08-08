@@ -1,13 +1,13 @@
+import { AuthModel } from "@/core/models/auth.model";
+import { authUseCase } from "@/core/useCases/auth.useCase";
 import { AUTH_KEY } from "@/enum/auth.enum";
-import { useAuth } from "@/hooks/auth/useAuth";
-import { useLocalStorage } from "@/hooks/common/useLocalStorage";
-import { useSnackbar } from "@/hooks/common/useSnackbar";
-import { AUTH_ROUTES } from "@/router/constant";
+import { AUTH_ROUTES } from "@/enum/router.enum";
 import { LoginPayload } from "@/types/auth.type";
 import { useNavigate } from "react-router-dom";
-import { useFetching } from "../../hooks/api/useFetching";
-import { AuthModel } from "../models/auth.model";
-import { authUseCase } from "../useCases/auth.useCase";
+import { useFetching } from "../hooks/api/useFetching";
+import { useAuth } from "../hooks/auth/useAuth";
+import { useLocalStorage } from "../hooks/common/useLocalStorage";
+import { useSnackbar } from "../hooks/common/useSnackbar";
 
 export const useAuthViewModel = () => {
     const { execute: _login, loading: isLogging } = useFetching<AuthModel>(
