@@ -1,16 +1,41 @@
-version: '3.8'
+version: '3.9'
 
 services:
   nginx:
     image: nginx:alpine
     container_name: react_nginx
-    volumes:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.react.rule=Host(`react-mvvm.localhost`)"
+      - "traefik.http.routers.react.entrypoints=websecure"
+      - "traefik.http.routers.react.tls=true"
+      - "traefik.http.services.react.loadbalancer.server.port=80"
+    networks:
+      - react-mvvm
+    volumes: 
       - $STATIC_FILE_DIR:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certs:/etc/nginx/certs:ro
+    restart: unless-stopped
+
+  traefik:
+    image: traefik:v2.6
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=demo@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
-      - $HTTPS_PORT:443
-      - $PORT:80
+      - "80:80"
+      - "443:443"
+      - "8084:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
     networks:
       - react-mvvm
 
