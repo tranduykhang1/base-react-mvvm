@@ -1,5 +1,6 @@
 import CustomButton from "@/presentations/components/Buttons/CustomButton";
 import CustomTextField from "@/presentations/components/TextFields/CustomTextField";
+import { useAnalytics } from "@/presentations/hooks/firebase/useAnalytics";
 import { useAuthViewModel } from "@/presentations/viewModels/AuthViewAuthModel";
 import { loginValidationSchema } from "@/schemas/auth.schema";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -13,9 +14,15 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { Field, Form, Formik } from "formik";
+import { useEffect } from "react";
 
 export default function LoginPage() {
     const { onLogin } = useAuthViewModel();
+    const { event } = useAnalytics();
+
+    useEffect(() => {
+        event("login");
+    });
 
     return (
         <Container maxWidth="xs">

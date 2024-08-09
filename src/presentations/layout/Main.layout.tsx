@@ -1,9 +1,9 @@
 import { AUTH_ROUTES } from "@/enum/router.enum";
+import { AuthProvider } from "@/providers/AuthProvider";
 import { Fragment, lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import PageLoading from "../components/Loading/PageLoading";
 import { useLayoutViewModel } from "../viewModels/LayoutViewModel";
-import {AuthProvider} from "@/providers/AuthProvider";
 
 const Header = lazy(() => import("@/presentations/layout/Header.layout"));
 
