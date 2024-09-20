@@ -28,3 +28,4 @@ dist-ssr
 *.sw?
 
 *storybook.log
+.vercel
