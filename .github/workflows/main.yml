@@ -39,6 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+      - uses: pnpm/action-setup@v3
 
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
