@@ -22,10 +22,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "21.x"
-          cache: "pnpm"
 
       - name: Setup pnpm
-        run: npm install -g pnpm
+        run: npm install -g pnpm # Ensures pnpm is installed and available
 
       - name: Install dependencies and build the project
         run: |
