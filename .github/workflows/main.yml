@@ -25,8 +25,8 @@ jobs:
 
       - name: Install - Build
         run: |
-          npm i -g pnpm
-          pnpm install --no-frozen-lockfile
+          npm i -g pnpm@9.0.6
+          pnpm install
           pnpm build
 
   deploy:
