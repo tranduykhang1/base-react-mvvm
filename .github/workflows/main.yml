@@ -1,8 +1,8 @@
 name: React-MVVM Simple CI
 
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_ORG_ID: team_slJLmcQUl3ipy2c6JZzgbSjl
+  VERCEL_PROJECT_ID: prj_VmFamu49LrfLSMaW6gjSbOrIp54A
 
 on:
   push:
@@ -45,19 +45,10 @@ jobs:
         run: npm install -g vercel@latest
 
       - name: Pull Vercel environment information
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token=7Sn6x76A32wJoZHCuXlHKPQJ
 
       - name: Build Project Artifacts
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --prod --token=7Sn6x76A32wJoZHCuXlHKPQJ
 
       - name: Deploy Project Artifacts to Vercel
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --token=7Sn6x76A32wJoZHCuXlHKPQJ
