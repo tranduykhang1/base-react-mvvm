@@ -35,7 +35,11 @@ jobs:
           pnpm build
 
   deploy:
-    if: github.event.label.name == 'deploy'
+    if: >-
+      (
+        contains(github.event.pull_request.labels.*.name, 'deploy') ||
+        contains(github.event.issue.labels.*.name, 'deploy')
+      )
     needs: install_and_test
     runs-on: ubuntu-22.04
     steps:
