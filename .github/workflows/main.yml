@@ -35,7 +35,7 @@ jobs:
           pnpm build
 
   deploy:
-    if: ${{ github.event.label.name == 'deploy' }}
+    if: github.event.label.name == 'deploy'
     needs: install_and_test
     runs-on: ubuntu-22.04
     steps:
